@@ -9,6 +9,26 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'body',
+
+    ];
+
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $appends = ['resource_url'];
+
+    /* ************************ ACCESSOR ************************* */
+
+    public function getResourceUrlAttribute()
+    {
+        return url('/admin/posts/'.$this->getKey());
+    }
 
     public function snippet(): Attribute {
         return Attribute::get(function () {
